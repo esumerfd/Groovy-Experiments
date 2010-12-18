@@ -1,6 +1,5 @@
 package org.bitbashers.groovy.experiments.propertyMissing
 
-
 import groovy.util.GroovyTestCase;
 
 class MissingPropertyTest extends GroovyTestCase {
