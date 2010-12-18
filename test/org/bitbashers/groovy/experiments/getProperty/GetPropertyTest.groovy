@@ -12,9 +12,13 @@ class GetPropertyTest extends GroovyTestCase {
 
 class Foo {
     def value
+    
+    // Note use of String type is required
     def getProperty(String name) {
         value
     }
+    
+    // Note use of void return type and String type is required
     void setProperty(String name, value) {
         this.value = value
     }
