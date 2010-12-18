@@ -4,12 +4,12 @@ class InvokeMethodTest extends GroovyTestCase {
     
     void test_invoke_method() {
         
-        assertEquals "intercepted", new Foo().someMethod()
+        assertEquals "intercepted someMethod [123]", new Foo().someMethod(123)
     }
 }
 
 class Foo {
-    def someMethod() {
-        "intercepted"
+    def invokeMethod(String name, args) {
+        "intercepted ${name} ${args}"
     }
 }
