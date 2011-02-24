@@ -33,10 +33,9 @@ class Foo {
 }
 
 class FooProxy {
-  @Delegate Foo x
+  @Delegate Foo x = new Foo("default instance")
   
   FooProxy() {
-    x = new Foo("default instance")
   }
   
   FooProxy(newX) {
