@@ -3,11 +3,11 @@ package org.bitbashers.groovy.experiments.metaclass.mixin
 import groovy.util.GroovyTestCase;
 
 class MetaMixinTest extends GroovyTestCase {
+  
+  void test_mixin() {
     
-    void test_mixin() {
-        
-        assertEquals "mixed in", new Foo().mixedIn()
-    }
+    assertEquals "mixed in", new Foo().mixedIn()
+  }
 }
 
 @Mixin(FooMix)
@@ -15,7 +15,7 @@ class Foo {
 }
 
 class FooMix {
-    def mixedIn() {
-        "mixed in"
-    }
+  def mixedIn() {
+    "mixed in"
+  }
 }

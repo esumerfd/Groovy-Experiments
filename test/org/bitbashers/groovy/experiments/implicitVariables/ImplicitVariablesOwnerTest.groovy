@@ -1,41 +1,41 @@
 package org.bitbashers.groovy.experiments.implicitVariables;
 
 class ImplicitVariablesOwnerTest extends GroovyTestCase {
+  
+  void test_owner_same_as_parent_this() {
     
-    void test_owner_same_as_parent_this() {
-        
-        def testInstance = this
-        
-        def closure = {
-            assertEquals testInstance, this
-            assertEquals this, owner
-        }
-        
-        closure()
+    def testInstance = this
+    
+    def closure = {
+      assertEquals testInstance, this
+      assertEquals this, owner
     }
     
-    void test_delegate_defaults_to_parent_this() {
-        
-        def testInstance = this
-        
-        def closure = {
-            assertEquals testInstance, this
-            assertEquals this, delegate
-        }
-        
-        closure()
+    closure()
+  }
+  
+  void test_delegate_defaults_to_parent_this() {
+    
+    def testInstance = this
+    
+    def closure = {
+      assertEquals testInstance, this
+      assertEquals this, delegate
     }
     
-    void test_delegate_reassigned_to_affect_closure_this() {
-        
-        def alternateContext = "some object"
-        
-        def closure = {
-            delegate = alternateContext
-            
-            assertEquals "SOME OBJECT", toUpperCase()
-        }
-        
-        closure()
+    closure()
+  }
+  
+  void test_delegate_reassigned_to_affect_closure_this() {
+    
+    def alternateContext = "some object"
+    
+    def closure = {
+      delegate = alternateContext
+      
+      assertEquals "SOME OBJECT", toUpperCase()
     }
+    
+    closure()
+  }
 }

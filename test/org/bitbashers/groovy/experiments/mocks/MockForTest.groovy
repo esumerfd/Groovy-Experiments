@@ -3,7 +3,9 @@ package org.bitbashers.groovy.experiments.mocks;
 import grails.test.*
 import groovy.mock.interceptor.*
 
+
 class MockForTests extends GroovyTestCase {
+  
   void test_mock_single_method_and_use_as_category() {
     def mock = new MockFor(MockForTestsClass)
     mock.demand.amethod { "from mock"}
