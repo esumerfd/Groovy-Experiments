@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/OpenJDK1.7"/>
-	<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry kind="lib" path="lib/groovy-all-1.8.0-beta-2.jar" sourcepath="lib/groovy-1.8.0-beta-2-src.zip"/>
 	<classpathentry kind="lib" path="lib/junit-4.8.2.jar"/>
 	<classpathentry kind="lib" path="lib/ivy-2.2.0.jar"/>
@@ -15,5 +14,6 @@
 	<classpathentry kind="lib" path="lib/nekohtml-1.9.9.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl-2.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/xml-resolver-1.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GROOVY_LIB_1.8.0b4"/>
 	<classpathentry kind="output" path="output"/>
 </classpath>
