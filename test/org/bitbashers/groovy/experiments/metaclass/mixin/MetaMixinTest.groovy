@@ -7,6 +7,7 @@ class MetaMixinTest extends GroovyTestCase {
   void test_mixin() {
     
     assertEquals "mixed in", new Foo().mixedIn()
+    assertEquals "a mixed property", new Foo().mixedProperty
   }
 }
 
@@ -15,6 +16,7 @@ class Foo {
 }
 
 class FooMix {
+  def mixedProperty = "a mixed property"
   def mixedIn() {
     "mixed in"
   }
