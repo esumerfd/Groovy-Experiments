@@ -4,6 +4,9 @@ import groovy.util.GroovyTestCase;
 import groovy.util.logging.Log
 import groovy.util.logging.Commons;
 
+/*
+ * http://svn.codehaus.org/groovy/trunk/groovy/groovy-core/src/main/groovy/util/logging/Log.java
+ */
 class LogTest extends GroovyTestCase {
   
   void test_is_a_java_util_logger() {
