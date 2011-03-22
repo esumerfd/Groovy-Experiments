@@ -13,6 +13,6 @@
 	<classpathentry kind="lib" path="lib/nekohtml-1.9.9.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl-2.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/xml-resolver-1.2.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GROOVY_LIB_1.8.0rc2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GROOVY_LIB_1.8.0rc3"/>
 	<classpathentry kind="output" path="output"/>
 </classpath>
