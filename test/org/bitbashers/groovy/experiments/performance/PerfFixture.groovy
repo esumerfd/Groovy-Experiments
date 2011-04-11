@@ -4,17 +4,20 @@ import java.text.NumberFormat;
 
 class PerfFixture extends GroovyTestCase {
   
+  static WARMUP = 100
+  static ITERATIONS = 10000
+
   def timeIt(message, closure) {
     println "${message} ${ measure closure }"
   }
   
   def measure(closure) {
     
-    100.times { closure() }
+    WARMUP.times { closure() }
     
     def start = System.nanoTime()
     
-    for (def loop = 10000; loop > 0; loop--) {
+    for (def loop = ITERATIONS; loop > 0; loop--) {
       closure()
     }
     
