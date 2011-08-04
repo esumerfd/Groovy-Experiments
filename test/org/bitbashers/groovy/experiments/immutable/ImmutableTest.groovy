@@ -1,33 +1,33 @@
 package org.bitbashers.groovy.experiments.immutable;
 
-import groovy.util.GroovyTestCase;
+import groovy.util.GroovyTestCase
 
 class ImmutableTest extends GroovyTestCase {
-  
+
   void test_immutability() {
     def thingy = new ImmutableThingy(name: "Fred")
-    
+
     assertEquals "Fred", thingy.name
   }
-  
-  void test_can_not_change() {    
-    
+
+  void test_can_not_change() {
+
     shouldFail ReadOnlyPropertyException, {
       def thingy = new ImmutableThingy(name: "Fred")
       thingy.name = "Someone else"
     }
   }
-  
+
   void test_two_props_with_defaults_must_use_empty_hash_as_constructor() {
     def immutable = new ImmutableTwoPropsWithDefaults([:])
-    
+
     assertEquals "Default Jamie", immutable.name
     assertEquals 10, immutable.age
   }
 }
 
 @groovy.transform.Immutable
-class ImmutableThingy { 
+final class ImmutableThingy {
   String name
 }
 
