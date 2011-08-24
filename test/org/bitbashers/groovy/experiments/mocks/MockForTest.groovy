@@ -43,6 +43,36 @@ class MockForTests extends GroovyTestCase {
     }
   }
 
+  /*
+   * This illustrates a down side of MockFor. Despite the fact that the MockFor constructor
+   * is passed the type that it is replacing it does no verification that the demands actually
+   * match the signatures of the methods in the real implementation.
+   */
+  void test_methods_do_not_have_to_exist_on_a_class_for_them_to_be_mocked() {
+
+    def mock = new MockFor(Object)
+    mock.demand.aMethodThatDoesNotExist {  }
+
+    mock.use {
+      new Object().aMethodThatDoesNotExist()
+    }
+  }
+
+  /*
+   * This illustrates a down side of MockFor. Despite the fact that the MockFor constructor
+   * is passed the type that it is replacing it does no verification that the demands actually
+   * match the signatures of the methods in the real implementation.
+   */
+  void test_demand_the_wrong_number_of_arguments_is_allowed() {
+    def mock = new MockFor(MockForTestsClass)
+    mock.demand.amethodwithparameters { a, extraArg -> "blindly called, changes in implementation ignored" }
+
+    mock.use {
+      assertEquals "blindly called, changes in implementation ignored",
+          new MockForTestsClass().amethodwithparameters(123, 123)
+    }
+  }
+
   void test_mock_single_method_and_use_proxy() {
     def mock = new MockFor(MockForTestsClass)
     mock.demand.amethod { "from mock with proxy"}
