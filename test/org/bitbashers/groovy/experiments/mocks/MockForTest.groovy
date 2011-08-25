@@ -14,6 +14,17 @@ class MockForTests extends GroovyTestCase {
     }
   }
 
+  void test_mock_single_method_using_demand_with_and_use_as_category() {
+    def mock = new MockFor(MockForTestsClass)
+    mock.demand.with {
+      amethod() { "from mock"}
+    }
+
+    mock.use {
+      assertEquals "from mock", new MockForTestsClass().amethod()
+    }
+  }
+
   void test_mock_single_static_method_and_use_as_category() {
     def mock = new MockFor(MockForTestsClass)
     mock.demand.astaticmethod { "from static mock"}
@@ -34,6 +45,8 @@ class MockForTests extends GroovyTestCase {
 
   /*
    * This is a special case problem related to a bug. This proves the work around.
+   * The bug is that you can not mock the "find" method unless you pass in the
+   * cardinality as well.
    */
   void test_mocking_a_method_called_find_is_a_special_case() {
     def mock = new MockFor(MockForTestsClass)
@@ -51,10 +64,10 @@ class MockForTests extends GroovyTestCase {
   void test_methods_do_not_have_to_exist_on_a_class_for_them_to_be_mocked() {
 
     def mock = new MockFor(Object)
-    mock.demand.aMethodThatDoesNotExist {  }
+    mock.demand.aMethodThatDoesNotExist { "SEE IT WORKS ANYWAY" }
 
     mock.use {
-      new Object().aMethodThatDoesNotExist()
+      assert "SEE IT WORKS ANYWAY" == new Object().aMethodThatDoesNotExist()
     }
   }
 
@@ -113,6 +126,23 @@ class MockForTests extends GroovyTestCase {
     }
 
     mock.use {  new MockForTestsClass() }
+  }
+
+  /*
+   * If you return the wrong type from this mocked constructor you will get
+   * an error like this which is a little hard to work out.
+   * 
+   *    java.lang.ClassCastException: java.lang.String cannot be cast to groovy.lang.GroovyObject
+   */
+  void test_mock_a_constructor_that_returns_the_wrong_type() {
+    def mock = new MockFor(MockForTestsClass, true)
+    mock.demand.with {
+      MockForTestsClass() { "THIS IS THE WRONG TYPE BEING RETURNED" }
+    }
+
+    shouldFail ClassCastException, {
+      mock.use {  new MockForTestsClass() }
+    }
   }
 
   /*

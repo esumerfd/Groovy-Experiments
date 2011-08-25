@@ -1,6 +1,5 @@
 package org.bitbashers.groovy.experiments.mocks;
 
-import grails.test.*
 import groovy.mock.interceptor.*
 
 class StubForTest extends GroovyTestCase {
@@ -13,6 +12,10 @@ class StubForTest extends GroovyTestCase {
     }
   }
   
+  /*
+   * While we can call stubbed methods many times we still have to specify
+   * a cardinality higher than our expected call count.
+   */
   void test_stub_single_method_but_call_it_many_times() {
     def mock = new StubFor(StubForTestsClass)
     mock.demand.amethod(9999) { "from stub" }

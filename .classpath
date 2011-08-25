@@ -15,6 +15,6 @@
 	<classpathentry kind="lib" path="lib/xml-resolver-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/spock-core-0.5-groovy-1.8.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
-	<classpathentry kind="var" path="GROOVY_1.8.0"/>
+	<classpathentry kind="var" path="GROOVY_1.8.0" sourcepath="/GROOVY_1.8.0_SRC"/>
 	<classpathentry kind="output" path="output"/>
 </classpath>
