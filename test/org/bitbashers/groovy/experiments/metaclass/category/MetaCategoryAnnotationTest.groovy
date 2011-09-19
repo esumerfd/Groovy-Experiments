@@ -10,7 +10,6 @@ class MetaCategoryAnnotationTest extends GroovyTestCase {
   }
   
   void test_method_not_included_if_no_use() {
-    
     assertEquals "original method", new Bar().mixedIn()
   }
 }
@@ -23,6 +22,8 @@ class Bar {
 
 @Category(Bar)
 class BarMix {
+  // PROPERTIES ARE NOT INSTALLED BY CATEGORIES
+  //def mixinProp = "mixin prop"
   def mixedIn() {
     "mixed in"
   }
