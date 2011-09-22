@@ -15,6 +15,6 @@
 	<classpathentry kind="lib" path="lib/spock-core-0.5-groovy-1.8.jar"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="var" path="GROOVY_1.8.0" sourcepath="/GROOVY_1.8.0_SRC"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/OpenJDK1.7"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JDK1.7.0"/>
 	<classpathentry kind="output" path="output"/>
 </classpath>
