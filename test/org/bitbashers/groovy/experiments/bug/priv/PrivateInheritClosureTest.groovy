@@ -40,6 +40,12 @@ class PrivateInheritClosureTest extends groovy.util.GroovyTestCase{
     def e = new PrivateInheritClosure(){
           // Dynamic Extension of Example
         }
-    e.processPrivate()
+    try {
+      e.processPrivate()
+      fail("Should have thrown the missing field exception")
+    }
+    catch (groovy.lang.MissingFieldException ex) {
+      // Should throw this exception
+    }
   }
 }

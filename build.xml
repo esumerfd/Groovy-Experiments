@@ -1,0 +1,50 @@
+<project name="groovy_experiments" default="test" basedir=".">
+
+  <path id="lib.classpath">
+    <fileset dir="lib">
+      <include name="**/*.jar" />
+    </fileset>
+  </path>
+
+  <path id="test.classpath">
+    <pathelement location="gen/classes" />
+    <path refid="lib.classpath"/>
+  </path>
+  
+  <target name="clean" description="clean up">
+    <delete dir="gen"/>
+  </target>
+  
+  <target name="compile" description="compile the source ">
+    <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="lib.classpath"/>
+    
+    <mkdir dir="gen/classes"/>
+    <groovyc destdir="gen/classes" classpathref="lib.classpath">
+      <src path="test"/>
+      <javac source="1.7" target="1.7" debug="on"/>
+    </groovyc>
+  </target>
+  
+  <taskdef 
+      name="junit" 
+      classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask" 
+      classpathref="lib.classpath" />
+  
+  <target name="test" depends="compile" description="Run unit tests">
+    <delete dir="gen/unit" />
+    <mkdir dir="gen/unit" />
+    
+    <junit printsummary="yes" failureproperty="junit.failure" haltonerror="no" haltonfailure="no" fork="yes">
+      <formatter type="xml" usefile="true" />
+      <batchtest todir="gen/unit">
+        <fileset dir="gen/classes">
+          <include name="**/*Test.class" />
+          <exclude name="**/HTTPBuilderTest.class"/>
+        </fileset>
+      </batchtest>
+      <classpath refid="test.classpath" />
+    </junit>
+    <fail if="junit.failure" message="JUNIT tests failed."/>
+  </target>
+  
+</project>
