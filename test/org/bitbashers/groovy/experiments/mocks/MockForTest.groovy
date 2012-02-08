@@ -1,5 +1,6 @@
 package org.bitbashers.groovy.experiments.mocks;
 
+import junit.framework.AssertionFailedError;
 import grails.test.*
 import groovy.mock.interceptor.*
 
@@ -11,6 +12,49 @@ class MockForTests extends GroovyTestCase {
     mock.demand.amethod { "from mock"}
     mock.use {
       assertEquals "from mock", new MockForTestsClass().amethod()
+    }
+  }
+
+  void test_create_a_spy_by_mocking_one_method_and_ignoring_others() {
+    def mock = new MockFor(MockForTestsClass)
+    mock.ignore.amethod()
+    mock.demand.amethodwithparameters { a -> "from mock with parameters ${a}" }
+    
+    mock.use {
+      assertEquals "original method", new MockForTestsClass().amethod()
+      assertEquals "from mock with parameters 123",
+          new MockForTestsClass().amethodwithparameters(123)
+    }
+  }
+
+  void test_create_a_spy_wtih_a_wildcard_ignore_pattern() {
+    def mock = new MockFor(MockForTestsClass)
+    mock.ignore(~/.*method/)
+    mock.demand.amethodwithparameters { a -> "from mock with parameters ${a}" }
+    
+    mock.use {
+      assertEquals "original method", new MockForTestsClass().amethod()
+      assertEquals "original static method", MockForTestsClass.astaticmethod()
+      assertEquals "from mock with parameters 123",
+          new MockForTestsClass().amethodwithparameters(123)
+    }
+  }
+
+  /*
+   * This demonstrates that you can not do an "ignore everything except" pattern without
+   * specifying all the methods to ignore specifically.
+   */
+  void test_create_a_spy_noting_that_ignore_override_demand() {
+    def mock = new MockFor(MockForTestsClass)
+    mock.ignore(~/.*/)
+    mock.demand.amethodwithparameters { a -> "from mock with parameters ${a}" }
+
+    // Assertion claims that amethodwithparameters was never called.
+    shouldFail AssertionFailedError, {
+
+      mock.use {
+        new MockForTestsClass().amethodwithparameters(123)
+      }
     }
   }
 
@@ -129,6 +173,24 @@ class MockForTests extends GroovyTestCase {
   }
 
   /*
+   * Constructor mocking requires that an instance of a class is returned
+   * and that instance can be cast to the mocked type. This can be done
+   * using a map but the map must be constructed outside the demand for the 
+   * constructor of a recursive call will ensue.
+   */
+  void test_mock_a_constructor_that_gets_used_with_a_hash_map() {
+    def myProxy = [amethod: { println "a proxy method" } ] as MockForTestsClass
+    
+    def mock = new MockFor(MockForTestsClass, true)
+    mock.demand.MockForTestsClass() { myProxy }
+    mock.ignore.amethod()
+
+    mock.use { 
+      new MockForTestsClass().amethod()
+    }
+  }
+
+  /*
    * If you return the wrong type from this mocked constructor you will get
    * an error like this which is a little hard to work out.
    * 
@@ -174,16 +236,16 @@ class MockForTests extends GroovyTestCase {
 
 class MockForTestsClass {
 
-  void amethod() {
-    println "original method"
+  def amethod() {
+    "original method"
   }
 
-  static void astaticmethod() {
-    println "original static method"
+  static def astaticmethod() {
+    "original static method"
   }
 
-  void amethodwithparameters(message) {
-    println "original method with parameters"
+  def amethodwithparameters(message) {
+    "original method with parameters"
   }
 }
 
