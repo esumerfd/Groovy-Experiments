@@ -30,15 +30,19 @@
       classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask" 
       classpathref="lib.classpath" />
   
+  <property name="test.pattern" value="**/*Test.class" />
+  <property name="test.formatter" value="xml"/>
+  <property name="test.useFile" value="true"/>
+
   <target name="test" depends="compile" description="Run unit tests">
     <delete dir="gen/unit" />
     <mkdir dir="gen/unit" />
     
     <junit printsummary="yes" failureproperty="junit.failure" haltonerror="no" haltonfailure="no" fork="yes">
-      <formatter type="xml" usefile="true" />
+      <formatter type="${test.formatter}" usefile="${test.useFile}" />
       <batchtest todir="gen/unit">
         <fileset dir="gen/classes">
-          <include name="**/*Test.class" />
+          <include name="${test.pattern}" />
           <exclude name="**/HTTPBuilderTest.class"/>
         </fileset>
       </batchtest>
