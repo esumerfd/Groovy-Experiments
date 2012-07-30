@@ -4,12 +4,23 @@ import groovy.util.GroovyTestCase;
 
 class CustomConstructorTest extends GroovyTestCase {
   
-  void test_replace_constructor() {
+  void test_constructor_baseline() {
     
     def customType = new CustomConstructor()
 
-    assert customType != null
-    assert (customtype instanceof CustomConstructor)
+    assert (customType instanceof CustomConstructor)
+    
+    assert customType.message == "Original Construtor"
+  }
+
+  void test_replace_constructor() {
+    CustomConstructor.metaClass = new CustomConstructorMetaClass(CustomConstructor.metaClass)
+
+    def customType = new CustomConstructor()
+
+    assert (customType instanceof CustomConstructor)
+
+    assert customType.message == "Custom Constructor"
   }
 }
 
@@ -19,13 +30,15 @@ class CustomConstructorMetaClass extends DelegatingMetaClass {
   }
 
   public Object invokeConstructor(Object[] arguments) {
-    println "arguments: ${arguments}"
-    return delegate.invokeConstructor(arguments);
+    def instance = delegate.invokeConstructor(arguments);
+    instance.message = "Custom Constructor"
+    instance
   }
 }
 
 class CustomConstructor {
+  def message
   CustomConstructor() {
-    println "Original Construtor"
+    message = "Original Construtor"
   }
 }

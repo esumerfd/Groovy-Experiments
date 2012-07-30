@@ -8,7 +8,7 @@ class PerfFixture extends GroovyTestCase {
   static ITERATIONS = 10000
 
   def timeIt(message, closure) {
-    println "${message} ${ measure closure }"
+    println("${message} ${ measure(closure) }")
   }
   
   def measure(closure) {

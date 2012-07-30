@@ -15,7 +15,17 @@
     <delete dir="gen"/>
   </target>
   
-  <target name="compile" description="compile the source ">
+  <target name="compile" depends="compile-source,compile-resources"/>
+  
+  <target name="compile-resources" description="compile the resources ">
+    <copy toDir="gen/classes">
+      <fileSet dir="test">
+        <include name="**/*.txt"/>
+      </fileSet>
+    </copy>
+  </target>
+
+  <target name="compile-source" description="compile the source ">
     <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="lib.classpath"/>
     
     <mkdir dir="gen/classes"/>

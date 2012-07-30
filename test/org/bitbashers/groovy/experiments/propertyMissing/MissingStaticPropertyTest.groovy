@@ -17,7 +17,7 @@ class MissingStaticPropertyTest extends GroovyTestCase {
 class StaticPropertyMissingFoo {
   static internalValue = "unset"
   static {
-    StaticPropertyMissingFoo.metaClass.static.propertyMissing << { String name ->
+    StaticPropertyMissingFoo.metaClass.static.propertyMissing = { String name ->
       "missed property '${internalValue}'"
     }
   }
